@@ -54,6 +54,26 @@ class Board
     count == 4
   end
 
+  def diagonal_four?(token)
+    count = 0
+    @table.each_with_index do |line, line_index|
+      line.each_with_index do |_cell, column_index|
+        loop do
+          break if count == 4 || line_index >= @table.size
+
+          if @table[line_index][column_index] == token
+            count += 1
+          else
+            count = 0
+          end
+          line_index += 1
+          column_index += 1
+        end
+      end
+    end
+    count == 4
+  end
+
   private
 
   def initialize_table(hash)

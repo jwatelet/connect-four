@@ -235,7 +235,7 @@ describe Board do
         expect(board.horizontal_four?(RED)).to be false
       end
     end
-    
+
     describe 'when a column of the board contains four consecutive tokens of the same color' do
       let(:table) do
         [
@@ -269,6 +269,32 @@ describe Board do
 
       it 'returns false' do
         expect(board.vertical_four?(RED)).to be false
+      end
+    end
+  end
+
+  describe 'diagonal_four?' do
+    describe 'when to board is empty' do
+      it 'returns false' do
+        expect(board.diagonal_four?(RED)).to be false
+      end
+    end
+
+    describe 'when the board contains four consecutive tokens in diagonal line' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', '_', RED, '_', '_', '_'],
+          ['_', '_', '_', '_', RED, '_', '_'],
+          ['_', '_', '_', '_', '_', RED, '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns true' do
+        expect(board.diagonal_four?(RED)).to be true
       end
     end
   end
