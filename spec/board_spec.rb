@@ -184,4 +184,92 @@ describe Board do
       end
     end
   end
+
+  describe 'horizontal_four?' do
+    describe 'when the board is empty' do
+      it 'returns false' do
+        expect(board.horizontal_four?(RED)).to be false
+      end
+    end
+
+    describe 'when a line of the board contains four consecutive tokens of the same color' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', RED, RED, RED, RED, '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns true' do
+        expect(board.horizontal_four?(RED)).to be true
+      end
+    end
+
+    describe 'when a line of the board contains four token of the same color but discontinued' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', RED, RED, '_', RED, RED, '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns false' do
+        expect(board.horizontal_four?(RED)).to be false
+      end
+    end
+  end
+
+  describe 'vertical_four?' do
+    describe 'when the board is empty' do
+      it 'returns false' do
+        expect(board.horizontal_four?(RED)).to be false
+      end
+    end
+    
+    describe 'when a column of the board contains four consecutive tokens of the same color' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns true' do
+        expect(board.vertical_four?(RED)).to be true
+      end
+    end
+
+    describe 'when a column of the board contains four non consecutive tokens of the same color' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', YELLOW, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns false' do
+        expect(board.vertical_four?(RED)).to be false
+      end
+    end
+  end
 end

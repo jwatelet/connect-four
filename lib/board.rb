@@ -22,6 +22,38 @@ class Board
     end
   end
 
+  def horizontal_four?(token)
+    count = 0
+    @table.each do |line|
+      line.each do |cell|
+        break if count == 4
+
+        if cell == token
+          count += 1
+        else
+          count = 0
+        end
+      end
+    end
+    count == 4
+  end
+
+  def vertical_four?(token)
+    count = 0
+    @table.transpose.each do |line|
+      line.each do |cell|
+        break if count == 4
+
+        if cell == token
+          count += 1
+        else
+          count = 0
+        end
+      end
+    end
+    count == 4
+  end
+
   private
 
   def initialize_table(hash)
