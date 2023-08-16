@@ -22,7 +22,7 @@ describe Board do
     end
 
     describe 'when the board contains a token' do
-      let(:array) do
+      let(:table) do
         [
           %w[_ _ _ _ _ _ _],
           %w[_ _ _ _ _ _ _],
@@ -32,7 +32,7 @@ describe Board do
           ['_', '_', RED, '_', '_', '_', '_']
         ]
       end
-      let(:board) { Board.new(array: array) }
+      let(:board) { Board.new(table: table) }
 
       it 'prints the empty board whith one token in the console' do
         result = <<~BOARD
@@ -50,7 +50,7 @@ describe Board do
     end
 
     describe 'when the board contains multiple tokens' do
-      let(:array) do
+      let(:table) do
         [
           %w[_ _ _ _ _ _ _],
           %w[_ _ _ _ _ _ _],
@@ -60,7 +60,7 @@ describe Board do
           ['_', '_', RED, YELLOW, '_', '_', '_']
         ]
       end
-      let(:board) { Board.new(array: array) }
+      let(:board) { Board.new(table: table) }
 
       it 'prints the board with many tokens in the console' do
         result = <<~BOARD
@@ -74,6 +74,113 @@ describe Board do
         BOARD
 
         expect { board.draw }.to output(result).to_stdout
+      end
+    end
+  end
+
+  describe '#add!' do
+    describe 'when the board is empty and you adds a new token' do
+      let(:result) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+
+      it 'contains the added token' do
+        board.add!(3, RED)
+        expect(board.table).to eql(result)
+      end
+    end
+
+    describe 'when the board contains a token and you adds a new token' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+      let(:result) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', YELLOW, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+
+      it 'contains the two tokens' do
+        board.add!(3, YELLOW)
+        expect(board.table).to eql(result)
+      end
+    end
+
+    describe 'when the board contains a token and you adds a new token next to it' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+      let(:result) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', RED, YELLOW, '_', '_', '_']
+        ]
+      end
+
+      it 'contains the two tokens' do
+        board.add!(4, YELLOW)
+        expect(board.table).to eql(result)
+      end
+    end
+
+    describe 'when the board contains a column full and you try to add one inside' do
+      let(:table) do
+        [
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+      let(:result) do
+        [
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', RED, '_', '_', '_', '_']
+        ]
+      end
+
+      it 'contains the two tokens' do
+        board.add!(3, YELLOW)
+        expect(board.table).to eql(result)
       end
     end
   end
