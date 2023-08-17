@@ -58,6 +58,12 @@ class Board
     diagonal_four_to_the_right?(token) || diagonal_four_to_the_left?(token)
   end
 
+  def game_over?
+    @table.map do |line|
+      line.include?(EMPTY)
+    end.all?(false)
+  end
+
   private
 
   def diagonal_four_to_the_right?(token)

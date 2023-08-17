@@ -185,7 +185,7 @@ describe Board do
     end
   end
 
-  describe 'horizontal_four?' do
+  describe '#horizontal_four?' do
     describe 'when the board is empty' do
       it 'returns false' do
         expect(board.horizontal_four?(RED)).to be false
@@ -229,7 +229,7 @@ describe Board do
     end
   end
 
-  describe 'vertical_four?' do
+  describe '#vertical_four?' do
     describe 'when the board is empty' do
       it 'returns false' do
         expect(board.horizontal_four?(RED)).to be false
@@ -273,7 +273,7 @@ describe Board do
     end
   end
 
-  describe 'diagonal_four?' do
+  describe '#diagonal_four?' do
     describe 'when to board is empty' do
       it 'returns false' do
         expect(board.diagonal_four?(RED)).to be false
@@ -349,6 +349,32 @@ describe Board do
 
       it 'returns true' do
         expect(board.diagonal_four?(YELLOW)).to be false
+      end
+    end
+  end
+
+  describe '#game_over?' do
+    describe 'when the board is full of tokens' do
+      let(:table) do
+        [
+          [RED, RED, RED, RED, RED, RED, RED],
+          [RED, RED, RED, RED, RED, RED, RED],
+          [RED, RED, RED, RED, RED, RED, RED],
+          [RED, RED, RED, RED, RED, RED, RED],
+          [RED, RED, RED, RED, RED, RED, RED],
+          [RED, RED, RED, RED, RED, RED, RED]
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns true' do
+        expect(board.game_over?).to be true
+      end
+    end
+
+    describe 'when the board is empty' do
+      it "returns false" do
+        expect(board.game_over?).to be false
       end
     end
   end
