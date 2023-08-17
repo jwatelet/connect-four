@@ -55,6 +55,12 @@ class Board
   end
 
   def diagonal_four?(token)
+    diagonal_four_to_the_right?(token) || diagonal_four_to_the_left?(token)
+  end
+
+  private
+
+  def diagonal_four_to_the_right?(token)
     count = 0
     @table.each_with_index do |line, line_index|
       line.each_with_index do |_cell, column_index|
@@ -74,7 +80,26 @@ class Board
     count == 4
   end
 
-  private
+  def diagonal_four_to_the_left?(token)
+    reversed_table = reverse_table
+    count = 0
+    reversed_table.each_with_index do |line, line_index|
+      line.each_with_index do |_cell, column_index|
+        loop do
+          break if count == 4 || line_index >= reversed_table.size
+
+          if reversed_table[line_index][column_index] == token
+            count += 1
+          else
+            count = 0
+          end
+          line_index += 1
+          column_index += 1
+        end
+      end
+    end
+    count == 4
+  end
 
   def initialize_table(hash)
     if hash[:table].nil?
@@ -95,5 +120,11 @@ class Board
     @table.map do |line|
       "|#{line.join(' ')}|"
     end.join("\n")
+  end
+
+  def reverse_table
+    @table.map do |line|
+      line.reverse
+    end
   end
 end

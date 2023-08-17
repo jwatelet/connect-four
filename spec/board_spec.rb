@@ -280,7 +280,7 @@ describe Board do
       end
     end
 
-    describe 'when the board contains four consecutive tokens in diagonal line' do
+    describe 'when the board contains four consecutive tokens in diagonal line that goes to the right' do
       let(:table) do
         [
           %w[_ _ _ _ _ _ _],
@@ -295,6 +295,24 @@ describe Board do
 
       it 'returns true' do
         expect(board.diagonal_four?(RED)).to be true
+      end
+    end
+
+    describe 'when the board contains four consecutive tokens in diagonal line that goes to the right' do
+      let(:table) do
+        [
+          %w[_ _ _ _ _ _ _],
+          %w[_ _ _ _ _ _ _],
+          ['_', '_', '_', '_', YELLOW, '_', '_'],
+          ['_', '_', '_', YELLOW, '_', '_', '_'],
+          ['_', '_', YELLOW, '_', '_', '_', '_'],
+          ['_', YELLOW, '_', '_', '_', '_', '_']
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns true' do
+        expect(board.diagonal_four?(YELLOW)).to be true
       end
     end
   end
