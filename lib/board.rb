@@ -23,35 +23,36 @@ class Board
   end
 
   def horizontal_four?(token)
-    count = 0
     @table.each do |line|
+      count = 0
       line.each do |cell|
-        break if count == 4
-
         if cell == token
           count += 1
         else
           count = 0
         end
+
+        return true if count == 4
       end
     end
-    count == 4
+    false
   end
 
   def vertical_four?(token)
-    count = 0
-    @table.transpose.each do |line|
-      line.each do |cell|
-        break if count == 4
+    transposed_table = @table.transpose
 
+    transposed_table.each do |line|
+      count = 0
+      line.each do |cell|
         if cell == token
           count += 1
         else
           count = 0
         end
+        return true if count == 4
       end
     end
-    count == 4
+    false
   end
 
   def diagonal_four?(token)

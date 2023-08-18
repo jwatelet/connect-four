@@ -271,6 +271,24 @@ describe Board do
         expect(board.vertical_four?(RED)).to be false
       end
     end
+
+    describe 'when you have multiples token but no vertical' do
+      let(:table) do
+        [
+          ['_', '_', RED, '_', '_', '_', '_'],
+          ['_', '_', YELLOW, '_', '_', '_', '_'],
+          ['_', '_', YELLOW, '_', '_', '_', '_'],
+          ['_', RED, YELLOW, YELLOW, '_', '_', '_'],
+          ['_', RED, RED, RED, '_', RED, '_'],
+          ['_', RED, YELLOW, RED, '_', YELLOW, YELLOW]
+        ]
+      end
+      let(:board) { Board.new(table: table) }
+
+      it 'returns false' do
+        expect(board.vertical_four?(RED)).to be false
+      end
+    end
   end
 
   describe '#diagonal_four?' do
