@@ -20,8 +20,6 @@ class Game
     end_game
   end
 
-  private
-
   def game_loop
     loop do
       @board.draw
@@ -34,9 +32,13 @@ class Game
   end
 
   def end_game
-    @display.puts_player_win(@player1) if @board.win?(@player1.token)
-    @display.puts_player_win(@player2) if @board.win?(@player2.token)
+    @display.puts_player_win(@player1) if player_wins?(@player1)
+    @display.puts_player_win(@player2) if player_wins?(@player2)
     @display.puts_game_over if @board.game_over?
+  end
+
+  def player_wins?(player)
+    @board.win?(player.token)
   end
 
   def player_turn(player)
