@@ -58,6 +58,10 @@ class Board
     diagonal_four_to_the_right?(token) || diagonal_four_to_the_left?(token)
   end
 
+  def win?(token)
+    horizontal_four?(token) || vertical_four?(token) || diagonal_four?(token)
+  end
+
   def game_over?
     @table.map do |line|
       line.include?(EMPTY)
@@ -67,44 +71,49 @@ class Board
   private
 
   def diagonal_four_to_the_right?(token)
-    count = 0
     @table.each_with_index do |line, line_index|
       line.each_with_index do |_cell, column_index|
+        count = 0
+        x = column_index
+        y = line_index
         loop do
-          break if count == 4 || line_index >= @table.size
-
-          if @table[line_index][column_index] == token
+          if @table[y][x] == token
             count += 1
           else
             count = 0
           end
-          line_index += 1
-          column_index += 1
+          y += 1
+          x += 1
+          return true if count == 4
+          break if y >= @table.size
         end
       end
     end
-    count == 4
+    false
   end
 
   def diagonal_four_to_the_left?(token)
     reversed_table = reverse_table
-    count = 0
     reversed_table.each_with_index do |line, line_index|
       line.each_with_index do |_cell, column_index|
+        count = 0
+        x = column_index
+        y = line_index
         loop do
-          break if count == 4 || line_index >= reversed_table.size
-
-          if reversed_table[line_index][column_index] == token
+          if reversed_table[y][x] == token
             count += 1
           else
             count = 0
           end
-          line_index += 1
-          column_index += 1
+          y += 1
+          x += 1
+          return true if count == 4
+
+          break if y >= reversed_table.size
         end
       end
     end
-    count == 4
+    false
   end
 
   def initialize_table(hash)
